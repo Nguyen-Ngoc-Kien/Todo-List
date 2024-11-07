@@ -12,7 +12,6 @@ export default {
     const searchTerm = ref('');
     const statusFilter = ref('');
     const showAddModal = ref(false);
-
     const showEditModal = ref(false);
     const showDeleteModal = ref(false);
     const showCompletionModal = ref(false);
