@@ -77,7 +77,8 @@ export default {
           <tbody class="text-gray-700 text-sm">
               <tr v-for="(todo, index) in paginatedTodos" :key="todo.id" class="border-b border-gray-200 hover:bg-gray-100">
                   <td class="py-3 px-6 text-left">
-                      <input type="checkbox" v-model="todo.selected" @change="updateSelectedCount" :disabled="todo.status === 'Đã hoàn thành'" class="appearance-none h-5 w-5 border border-gray-800 rounded-full checked:bg-blue-500 checked:border-transparent transition-all duration-200 cursor-pointer" />
+                      <input type="checkbox" v-model="todo.selected" @change="updateSelectedCount" :disabled="todo.status === 'Đã hoàn thành'"  class="appearance-none h-5 w-5 border border-gray-800 rounded-full checked:bg-blue-500 checked:border-transparent transition-all duration-200 cursor-pointer
+                      disabled:opacity-50 disabled:cursor-not-allowed" />
                   </td>
                   <td class="py-3 px-6 text-left">{{ index + 1 + (currentPage - 1) * itemsPerPage }}</td>
                   <td class="py-3 px-6 text-left">{{ todo.text }}</td>
