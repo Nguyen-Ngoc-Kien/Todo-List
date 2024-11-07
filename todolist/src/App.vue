@@ -1,7 +1,3 @@
-<template>
-  <TodoList />
-</template>
-
 <script>
 import TodoList from './components/TodoList.vue'
 
@@ -11,6 +7,10 @@ export default {
   },
 }
 </script>
+
+<template>
+  <TodoList />
+</template>
 
 <style>
 

@@ -1,3 +1,58 @@
+<script>
+export default {
+  props: {
+      todos: Array,
+  },
+  data() {
+      return {
+          allSelected: false,
+          selectedCount: 0,
+          currentPage: 1,
+          itemsPerPage: 6,
+      };
+  },
+  computed: {
+    paginatedTodos() {
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      const end = start + this.itemsPerPage;
+      return this.todos.slice(start, end);
+    },
+    totalPages() {
+      return Math.ceil(this.todos.length / this.itemsPerPage);
+    },
+  },
+  methods: {
+    toggleSelectAll() {
+      this.todos.forEach(todo => {
+        if (todo.status !== 'Đã hoàn thành') {
+          todo.selected = this.allSelected;
+        }
+      });
+    },
+      updateSelectedCount() {
+          this.selectedCount = this.todos.filter(todo => todo.selected).length;
+          this.allSelected = this.selectedCount === this.todos.length;
+      },
+      nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+        this.allSelected = false;
+      }
+    },
+    prevPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+        this.allSelected = false;
+      }
+    },
+    goToPage(page) {
+      this.currentPage = page;
+      this.allSelected = false;
+    },
+  },
+}
+</script>
+
 <template>
   <div class="mt-8">
       <h2 class="text-xl font-semibold mb-4">Danh sách công việc</h2>
@@ -56,61 +111,6 @@
 
   </div>
 </template>
-
-<script>
-export default {
-  props: {
-      todos: Array,
-  },
-  data() {
-      return {
-          allSelected: false,
-          selectedCount: 0,
-          currentPage: 1,
-          itemsPerPage: 6,
-      };
-  },
-  computed: {
-    paginatedTodos() {
-      const start = (this.currentPage - 1) * this.itemsPerPage;
-      const end = start + this.itemsPerPage;
-      return this.todos.slice(start, end);
-    },
-    totalPages() {
-      return Math.ceil(this.todos.length / this.itemsPerPage);
-    },
-  },
-  methods: {
-    toggleSelectAll() {
-      this.todos.forEach(todo => {
-        if (todo.status !== 'Đã hoàn thành') {
-          todo.selected = this.allSelected;
-        }
-      });
-    },
-      updateSelectedCount() {
-          this.selectedCount = this.todos.filter(todo => todo.selected).length;
-          this.allSelected = this.selectedCount === this.todos.length;
-      },
-      nextPage() {
-      if (this.currentPage < this.totalPages) {
-        this.currentPage++;
-        this.allSelected = false;
-      }
-    },
-    prevPage() {
-      if (this.currentPage > 1) {
-        this.currentPage--;
-        this.allSelected = false;
-      }
-    },
-    goToPage(page) {
-      this.currentPage = page;
-      this.allSelected = false;
-    },
-  },
-}
-</script>
 
 <style scoped>
 </style>

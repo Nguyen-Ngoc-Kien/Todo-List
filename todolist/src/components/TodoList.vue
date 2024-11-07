@@ -1,127 +1,10 @@
-<template>
-  <div class="p-6 bg-gray-100 min-h-screen">
-    <h1 class="text-2xl font-bold mb-4">To-Do List</h1>
-    <button 
-      @click="showAddModal = true" 
-      class="bg-blue-500 text-white px-4 py-2 rounded mb-4 hover:bg-blue-600">
-      Thêm công việc
-    </button>
-
-    <div v-if="showAddModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-  <div class="bg-white p-6 rounded shadow-lg w-96">
-    <h3 class="text-xl font-semibold mb-4">Thêm công việc mới</h3>
-    <input
-      v-model="newTodo.text"
-      type="text"
-      placeholder="Nhập công việc..."
-      class="p-2 border rounded w-full mb-2"
-    />
-    <input
-      v-model="newTodo.date"
-      type="datetime-local"
-      class="p-2 border rounded w-full mb-2"
-    />
-    <div class="flex justify-end mt-4">
-      <button @click="addTodo" class="bg-blue-500 text-white px-4 py-2 rounded mr-2 hover:bg-blue-600">
-        Thêm
-      </button>
-      <button @click="closeModal" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
-        Hủy
-      </button>
-    </div>
-  </div>
-</div>
-
-    <div class="mb-6 flex space-x-4">
-      <input
-        v-model="searchTerm"
-        type="text"
-        placeholder="Tìm kiếm công việc..."
-        class="p-2 border rounded w-full"
-      />
-      <select v-model="statusFilter" class="p-2 border rounded">
-        <option value="">Tất cả trạng thái</option>
-        <option value="Đang diễn ra">Đang diễn ra</option>
-        <option value="Đã hoàn thành">Đã hoàn thành</option>
-        <option value="Đã quá hạn">Đã quá hạn</option>
-      </select>
-    </div>
-
-    <TodoTable 
-      :todos="filteredTodos" 
-      @edit-todo="openEditModal" 
-      @delete-todo="openDeleteModal" 
-      @complete-selected="completeSelectedTodos" 
-    />
-
-    <button 
-      v-if="hasSelectedTodos" 
-      @click="confirmCompletionModal" 
-      class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-      Đã hoàn thành
-    </button>
-
-    <!-- <Calendar :todos="todos" /> calendar bi loi -->
-
-    <div v-if="showCompletionModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div class="bg-white p-6 rounded shadow-lg w-96">
-        <h3 class="text-xl font-semibold mb-4">Xác nhận hoàn thành công việc</h3>
-        <p>Bạn có chắc chắn muốn đánh dấu công việc này là hoàn thành?</p>
-        <div class="flex justify-end mt-4">
-          <button @click="completeSelectedTodos" class="bg-green-500 text-white px-4 py-2 rounded mr-2 hover:bg-green-600">Hoàn thành</button>
-          <button @click="closeModal" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Hủy</button>
-        </div>
-      </div>
-    </div>
-
-
-    <div v-if="showEditModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div class="bg-white p-6 rounded shadow-lg w-96">
-        <h3 class="text-xl font-semibold mb-4">Chỉnh sửa công việc</h3>
-        <input
-          v-model="editTodo.text"
-          type="text"
-          class="p-2 border rounded w-full mb-2"
-          placeholder="Sửa công việc..."
-        />
-        <input v-model="editTodo.date" type="datetime-local" class="p-2 border rounded w-full mb-2" />
-        <div class="flex justify-end">
-          <button @click="updateTodo" class="bg-green-500 text-white px-4 py-2 rounded mr-2 hover:bg-green-600">
-            Lưu
-          </button>
-          <button @click="closeModal" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
-            Hủy
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div v-if="showDeleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-      <div class="bg-white p-6 rounded shadow-lg w-96">
-        <h3 class="text-xl font-semibold mb-4">Xác nhận xóa công việc</h3>
-        <p>Bạn có chắc chắn muốn xóa công việc này?</p>
-        <div class="flex justify-end mt-4">
-          <button @click="deleteTodo" class="bg-red-500 text-white px-4 py-2 rounded mr-2 hover:bg-red-600">
-            Xóa
-          </button>
-          <button @click="closeModal" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
-            Hủy
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script>
 import { ref, onMounted, onUnmounted, computed } from 'vue';
 import TodoTable from './TodoTable.vue'
-import Calendar from './Calendar.vue'
 
 export default {
   components: {
     TodoTable,
-    Calendar,
   },
   setup() {
     const newTodo = ref({ text: '', date: '', status: 'Đang diễn ra' });
@@ -312,6 +195,119 @@ export default {
   },
 }
 </script>
+
+<template>
+  <div class="p-6 bg-gray-100 min-h-screen">
+    <h1 class="text-2xl font-bold mb-4">To-Do List</h1>
+    <button 
+      @click="showAddModal = true" 
+      class="bg-blue-500 text-white px-4 py-2 rounded mb-4 hover:bg-blue-600">
+      Thêm công việc
+    </button>
+
+    <div v-if="showAddModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+  <div class="bg-white p-6 rounded shadow-lg w-96">
+    <h3 class="text-xl font-semibold mb-4">Thêm công việc mới</h3>
+    <input
+      v-model="newTodo.text"
+      type="text"
+      placeholder="Nhập công việc..."
+      class="p-2 border rounded w-full mb-2"
+    />
+    <input
+      v-model="newTodo.date"
+      type="datetime-local"
+      class="p-2 border rounded w-full mb-2"
+    />
+    <div class="flex justify-end mt-4">
+      <button @click="addTodo" class="bg-blue-500 text-white px-4 py-2 rounded mr-2 hover:bg-blue-600">
+        Thêm
+      </button>
+      <button @click="closeModal" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+        Hủy
+      </button>
+    </div>
+  </div>
+</div>
+
+    <div class="mb-6 flex space-x-4">
+      <input
+        v-model="searchTerm"
+        type="text"
+        placeholder="Tìm kiếm công việc..."
+        class="p-2 border rounded w-full"
+      />
+      <select v-model="statusFilter" class="p-2 border rounded">
+        <option value="">Tất cả trạng thái</option>
+        <option value="Đang diễn ra">Đang diễn ra</option>
+        <option value="Đã hoàn thành">Đã hoàn thành</option>
+        <option value="Đã quá hạn">Đã quá hạn</option>
+      </select>
+    </div>
+
+    <TodoTable 
+      :todos="filteredTodos" 
+      @edit-todo="openEditModal" 
+      @delete-todo="openDeleteModal" 
+      @complete-selected="completeSelectedTodos" 
+    />
+
+    <button 
+      v-if="hasSelectedTodos" 
+      @click="confirmCompletionModal" 
+      class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+      Đã hoàn thành
+    </button>
+
+    <div v-if="showCompletionModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+      <div class="bg-white p-6 rounded shadow-lg w-96">
+        <h3 class="text-xl font-semibold mb-4">Xác nhận hoàn thành công việc</h3>
+        <p>Bạn có chắc chắn muốn đánh dấu công việc này là hoàn thành?</p>
+        <div class="flex justify-end mt-4">
+          <button @click="completeSelectedTodos" class="bg-green-500 text-white px-4 py-2 rounded mr-2 hover:bg-green-600">Hoàn thành</button>
+          <button @click="closeModal" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">Hủy</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div v-if="showEditModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+      <div class="bg-white p-6 rounded shadow-lg w-96">
+        <h3 class="text-xl font-semibold mb-4">Chỉnh sửa công việc</h3>
+        <input
+          v-model="editTodo.text"
+          type="text"
+          class="p-2 border rounded w-full mb-2"
+          placeholder="Sửa công việc..."
+        />
+        <input v-model="editTodo.date" type="datetime-local" class="p-2 border rounded w-full mb-2" />
+        <div class="flex justify-end">
+          <button @click="updateTodo" class="bg-green-500 text-white px-4 py-2 rounded mr-2 hover:bg-green-600">
+            Lưu
+          </button>
+          <button @click="closeModal" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+            Hủy
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="showDeleteModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+      <div class="bg-white p-6 rounded shadow-lg w-96">
+        <h3 class="text-xl font-semibold mb-4">Xác nhận xóa công việc</h3>
+        <p>Bạn có chắc chắn muốn xóa công việc này?</p>
+        <div class="flex justify-end mt-4">
+          <button @click="deleteTodo" class="bg-red-500 text-white px-4 py-2 rounded mr-2 hover:bg-red-600">
+            Xóa
+          </button>
+          <button @click="closeModal" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+            Hủy
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
 
 <style scoped>
 
